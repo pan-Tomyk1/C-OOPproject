@@ -1,89 +1,126 @@
 using System;
-using System.Collections.Generic;
-
 
 namespace OopLaba7
 {
-    public class MyList
-    {
-        List<short> arrayList;
+    public class MyList {
+        Node _head;
+        private int _counterOfElements;
 
-        public List<short> ArrayList { get; internal set; }
-
-        public MyList()
-        {
-            arrayList = new List<short>();
+        public MyList() {
+            this._head = null;
         }
 
-        public int count()
-        {
-            return arrayList.Count;
+        public int Size() {
+            return _counterOfElements;
         }
 
-        public List<short> returnArrayList()
-        {
-            return arrayList;
+        public void Add(short data) {
+            Node newNode = new Node(data);
+            if (_head == null) {
+                _head = newNode;
+            } else {
+                Node current = _head;
+                while (current.NextElement != null) {
+                    current = current.NextElement;
+                }
+                current.NextElement=newNode;
+            }
+            _counterOfElements++;
+        }
+        
+        public short Get(int index) {
+            if (_head == null || index < 0) {
+                throw new Exception("Invalid index or empty list");
+            }
+            Node current = _head;
+            for (int i = 0; i < index; i++) {
+                current = current.NextElement;
+                if (current == null) {
+                    throw new Exception("Index out of range");
+                }
+            }
+            return current.Data;
         }
 
-        public void AddElement(short element)
-        {
-            arrayList.Add(element);
+        public void Delete(int index) {
+            _counterOfElements--;
+            if (_head == null || index < 0) {
+                throw new Exception("Invalid index or empty list");
+            }
+            if (index == 0) {
+                _head = _head.NextElement;
+                return;
+            }
+            Node prev = null;
+            Node current = _head;
+            for (int i = 0; i < index; i++) {
+                prev = current;
+                current = current.NextElement;
+                if (current == null) {
+                    throw new Exception("Index out of range");
+                }
+            }
+            prev.NextElement=current.NextElement;
         }
 
-        public short GetElement(int index)
-        {
-            if (!Validation.ValidateNumber(index, arrayList.Count, 0))
-                return Int16.MinValue;
-            return arrayList[index];
-        }
-
-        public List<short> FindMultiples(short number)
-        {
-            List<short> multiples = new List<short>();
-            foreach (short element in arrayList)
-            {
-                if (element % number == 0)
-                {
+        public MyList FindMultiples(short number) {
+            short element;
+            MyList multiples = new MyList();
+            for (int i = 0; i < this.Size(); i++) {
+                element = this.Get(i);
+                if (element % number == 0) {
                     multiples.Add(element);
                 }
             }
             return multiples;
         }
-        public void ReplaceEvenPositionElementsWithZero()
-        {
-            for (int i = 0; i < count(); i++)
-            {
-                if (i % 2 == 0)
-                {
-                    arrayList[i] = 0;
+
+        public void ReplaceEvenPositionElementsWithZero() {
+            for (int i = 0; i < this.Size(); i++) {
+                if (i % 2 != 0) {
+                    this.Set(i, 0);
                 }
             }
         }
 
+        public void Set(int index, short value) {
+            if (_head == null || index < 0) {
+                throw new Exception("Invalid index or empty list");
+            }
+            Node current = _head;
+            for (int i = 0; i < index; i++) {
+                current = current.NextElement;
+                if (current == null) {
+                    throw new Exception("Index out of range");
+                }
+            }
+            current.Data=value;
+        }
 
-        public List<short> GetValuesGreaterThanThreshold(short number)
-        {
-            List<short> list = new List<short>();
-            foreach (short s in arrayList)
-            {
-                if (number < s)
-                {
-                    list.Add(s);
+        public MyList GetValuesGreaterThanThreshold(short number) {
+            short element;
+            MyList list = new MyList();
+            for (int i = 0; i < this.Size(); i++) {
+                element = this.Get(i);
+                if (element > number) {
+                    list.Add(element);
                 }
             }
             return list;
         }
-
-        public void DeleteElementsAtNonEvenPositions()
-        {
-            for (int i = count() - 1; i >= 0; i--)
-            {
-                if (i % 2 != 0)
-                {
-                    arrayList.RemoveAt(i);
+        public void DeleteElementsAtNonEvenPositions(){
+            for (int i = this.Size()-1; i >=0; i--) {
+                if(i%2==0){
+                    this.Delete(i);
                 }
             }
         }
-
+        public void PrintList(){
+            Console.Write("[  ");
+            for (int i = 0; i < this.Size(); i++) {
+                Console.Write(this.Get(i)+" ");
+            }
+            Console.Write("]");
+        }
     }
 }
