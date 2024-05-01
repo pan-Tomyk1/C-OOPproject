@@ -120,7 +120,7 @@ namespace OopLaba7
             for (int i = 0; i < this.Size(); i++) {
                 Console.Write(this.Get(i)+" ");
             }
-            Console.Write("]");
+            Console.WriteLine("]");
         }
     }
 }

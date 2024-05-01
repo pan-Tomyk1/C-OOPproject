@@ -7,7 +7,7 @@
         {
             static readonly MyList MyList = new MyList();
 
-            static void Main()
+            private static void Main()
             {
                 Program program = new Program();
                 program.Greeting();
