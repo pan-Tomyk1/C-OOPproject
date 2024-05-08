@@ -6,5 +6,6 @@ namespace OopLaba7
         {
             return number <= max && number >= min;
         }
+        
     }
 }

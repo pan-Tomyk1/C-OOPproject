@@ -55,7 +55,13 @@
                 {
                     try
                     {
-                        number = Convert.ToInt32(Console.ReadLine());
+                        string input = Console.ReadLine();
+                        if (Object.Equals(input,""))
+                        {
+                            throw new Exception();
+                        }
+
+                        number = Convert.ToInt32(input);
                     }
                     catch (Exception)
                     {
@@ -134,12 +140,15 @@
                 Console.WriteLine("Please enter items, in order to finish typing please enter any letter");
                 Console.WriteLine("Maximum value - " + short.MaxValue + " minimum value - " + short.MinValue);
                 bool checkNumber = true;
+                string i;
                 short input;
                 do
                 {
                     try
                     {
-                        input = short.Parse(Console.ReadLine());
+                        i = Console.ReadLine();
+                        if (Object.Equals(i, "")||Object.Equals(i,null)) continue;//перевірка на те чи ввів щось користувач
+                        input = short.Parse(i);
                         MyList.Add(input);
                     }
                     catch (Exception)
